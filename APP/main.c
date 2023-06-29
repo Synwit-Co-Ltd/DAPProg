@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 
 #include "SWM341.h"
 
@@ -58,10 +59,19 @@ int main(void)
 		else
 			swd_read_memory(Flash_Start_Addr + addr, buff, 1024);
 		for(uint32_t i = 0; i < 1024; i++) printf("%02X ", buff[i]);
-		printf("\r\n\r\n\r\n");
+		
+		if(Target_SWM181 && (addr == 0))
+			if(*((uint32_t *)&buff[36]) == (sizeof(SWM181_stdperiph_lib) + 4095) / 4096 * 4096)
+				*((uint32_t *)&buff[36]) = *((uint32_t *)&SWM181_stdperiph_lib[36]);
+		
+		uint32_t cmp_size = sizeof(SWM181_stdperiph_lib) - addr;
+		if(memcmp(&SWM181_stdperiph_lib[addr], buff, cmp_size > 1024 ? 1024 : cmp_size) == 0)
+			printf("\r\nPass\r\n\r\n\r\n");
+		else
+			printf("\r\nFail\r\n\r\n\r\n");
 	}
 	
-	swd_set_target_state_hw(RUN);
+	target_flash_uninit();
 	
 	while(1)
 	{
