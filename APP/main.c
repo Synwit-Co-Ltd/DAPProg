@@ -22,11 +22,16 @@ void SWM181_SWD_Read(uint32_t addr, uint8_t buff[], uint32_t size);
 
 int main(void)
 {	
+	uint32_t val;
+	
 	SystemInit();
 	
 	SerialInit();
 	
 	swd_init_debug();
+	
+	swd_read_dp(0x00, &val);
+	printf("\n\nIDCODE: %08X\n\n", val);
 	
 	target_flash_init(Flash_Start_Addr);
 	
