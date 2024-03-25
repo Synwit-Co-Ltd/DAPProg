@@ -34,6 +34,7 @@ static const uint32_t flash_code[] = {
 const program_target_t flash_algo = {
     0x20000021,  // Init
     0x20000051,  // UnInit
+    0x20000293,  // Verify
     0x2000023B,  // EraseChip
     0x20000165,  // EraseSector
     0x200001B9,  // ProgramPage
