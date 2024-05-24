@@ -6,7 +6,7 @@
 #include "SWD_host.h"
 #include "SWD_flash.h"
 
-#include "algo/SWM181xC.c"
+#include "../doc/FlashAlgo/SWM181xC.c"
 uint32_t Flash_Sect_Size = 4096;
 uint32_t Flash_Page_Size = 256;
 uint32_t Flash_Start_Addr = 0x00000000;
